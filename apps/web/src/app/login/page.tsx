@@ -20,7 +20,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-70px)] bg-[#f4f7f6] font-['var(--font-poppins)'] items-center justify-center p-4 sm:p-8">
+    <div className="flex min-h-[calc(100vh-70px)] bg-[#f4f7f6]'] items-center justify-center p-4 sm:p-8">
       {/* Centralized Card Container */}
       <div
         className={`w-full max-w-[1100px] min-h-[650px] bg-white rounded-[32px] shadow-[0px_10px_40px_rgba(44,134,154,0.1)] flex flex-col overflow-hidden transition-all duration-500 ${mode === "signin" ? "lg:flex-row-reverse" : "lg:flex-row"}`}
@@ -98,7 +98,7 @@ export default function LoginPage() {
           <div className="absolute -bottom-[20%] -left-[10%] w-[400px] h-[400px] rounded-full bg-[#2c869a]/40 blur-[80px] z-0"></div>
           <div className="relative z-10 max-w-md mx-auto mb-12">
             <div className="flex flex-row items-center gap-4 mb-6">
-              <div className="bg-white/10 w-16 h-16 rounded-2xl backdrop-blur-sm border border-white/20 flex items-center justify-center overflow-hidden">
+              <div className="bg-white/10 w-17 h-16 rounded-2xl backdrop-blur-sm border border-white/20 flex items-center justify-center overflow-hidden">
                 <img
                   src="/images/Logo_SaGentong.svg"
                   alt="SaGentong Logo"
