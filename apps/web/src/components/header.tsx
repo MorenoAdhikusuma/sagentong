@@ -33,7 +33,7 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full bg-white sticky top-0 z-50 shadow-[0px_4px_12px_0px_rgba(0,0,0,0.05)] font-['var(--font-poppins)'] h-[70px]">
+    <header className="w-full bg-white sticky top-0 z-50 shadow-[0px_4px_12px_0px_rgba(0,0,0,0.05)]'] h-[70px]">
       <div className="max-w-[1336px] h-full mx-auto flex items-center justify-between px-6 md:px-10 lg:px-12">
         {/* Logo */}
         <div

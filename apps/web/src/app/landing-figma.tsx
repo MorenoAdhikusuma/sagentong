@@ -18,7 +18,7 @@ import Image from "next/image";
 
 export default function LandingFigma() {
   return (
-    <div className="w-full bg-white font-['var(--font-poppins)']">
+    <div className="w-full bg-white']">
       {/* BERANDA (Hero) Section */}
       <section
         id="beranda"

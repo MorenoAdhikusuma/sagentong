@@ -32,7 +32,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${poppins.variable} ${inter.variable} antialiased`}>
         <Providers>
-          <div className="grid grid-rows-[auto_1fr] h-svh font-[var(--font-poppins)]">
+          <div className="grid grid-rows-[auto_1fr] h-svh">
             <Header />
             <PageTransition>{children}</PageTransition>
           </div>
