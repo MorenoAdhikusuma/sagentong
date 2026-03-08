@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import z from "zod";
-import { Mail, Lock, EyeOff, Eye } from "lucide-react";
+import { Mail, Lock, EyeOff, Eye, RefreshCw, ArrowLeft } from "lucide-react";
 
 import { authClient } from "@/lib/auth-client";
 
@@ -16,6 +16,9 @@ export default function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () 
   const router = useRouter();
   const { isPending } = authClient.useSession();
   const [showPassword, setShowPassword] = useState(false);
+  const [emailNotVerified, setEmailNotVerified] = useState(false);
+  const [unverifiedEmail, setUnverifiedEmail] = useState("");
+  const [resendCooldown, setResendCooldown] = useState(0);
 
   const form = useForm({
     defaultValues: {
@@ -34,7 +37,13 @@ export default function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () 
             toast.success("Masuk berhasil");
           },
           onError: (error) => {
-            toast.error(error.error.message || error.error.statusText);
+            if (error.error.status === 403) {
+              // Email not verified — show verification prompt
+              setUnverifiedEmail(value.email);
+              setEmailNotVerified(true);
+            } else {
+              toast.error(error.error.message || error.error.statusText);
+            }
           },
         },
       );
@@ -47,10 +56,89 @@ export default function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () 
     },
   });
 
+  const startResendCooldown = () => {
+    setResendCooldown(60);
+    const interval = setInterval(() => {
+      setResendCooldown((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
+
+  const handleResendVerification = async () => {
+    if (resendCooldown > 0) return;
+    try {
+      await authClient.sendVerificationEmail({
+        email: unverifiedEmail,
+        callbackURL: "/verify-email",
+      });
+      toast.success("Email verifikasi telah dikirim ulang.");
+      startResendCooldown();
+    } catch {
+      toast.error("Gagal mengirim ulang email verifikasi.");
+    }
+  };
+
   if (isPending) {
     return (
       <div className="p-10 flex justify-center min-h-[500px] items-center">
         <Loader />
+      </div>
+    );
+  }
+
+  // Email verification required screen
+  if (emailNotVerified) {
+    return (
+      <div className="flex flex-col justify-center items-center h-full w-full max-w-[400px] mx-auto text-center">
+        <div className="w-20 h-20 rounded-2xl bg-amber-50 flex items-center justify-center mb-8 ring-1 ring-amber-200/60">
+          <Mail className="w-10 h-10 text-amber-600" />
+        </div>
+
+        <h1 className="text-[26px] font-bold text-[#0f374c] leading-tight mb-3">
+          Email Belum Diverifikasi
+        </h1>
+
+        <p className="text-gray-500 font-light text-[15px] mb-2 max-w-[340px]">
+          Akun Anda memerlukan verifikasi email sebelum dapat masuk. Periksa inbox Anda di:
+        </p>
+
+        <p className="text-[#2c869a] font-semibold text-[15px] mb-6 bg-[#2c869a]/5 px-4 py-2 rounded-xl border border-[#2c869a]/10">
+          {unverifiedEmail}
+        </p>
+
+        <p className="text-gray-400 text-[13px] mb-8 max-w-[320px] leading-relaxed">
+          Klik link verifikasi yang telah dikirim ke email Anda. Periksa juga folder spam jika tidak
+          ditemukan.
+        </p>
+
+        <button
+          onClick={handleResendVerification}
+          disabled={resendCooldown > 0}
+          className="inline-flex items-center gap-2 text-[14px] font-semibold text-[#2c869a] hover:text-[#1f5f6e] transition disabled:opacity-40 disabled:cursor-not-allowed mb-8"
+        >
+          <RefreshCw className="w-4 h-4" />
+          {resendCooldown > 0
+            ? `Kirim ulang dalam ${resendCooldown}d`
+            : "Kirim Ulang Email Verifikasi"}
+        </button>
+
+        <div className="w-full border-t border-gray-100 pt-6">
+          <button
+            onClick={() => {
+              setEmailNotVerified(false);
+              setUnverifiedEmail("");
+            }}
+            className="inline-flex items-center gap-1.5 text-[14px] font-medium text-gray-500 hover:text-[#2c869a] transition"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Kembali ke halaman masuk
+          </button>
+        </div>
       </div>
     );
   }
@@ -191,40 +279,6 @@ export default function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () 
           </form.Subscribe>
         </div>
       </form>
-
-      {/* Divider */}
-      <div className="flex items-center gap-4 my-8">
-        <div className="h-[1px] flex-1 bg-gray-200"></div>
-        <span className="text-[13px] text-gray-400 font-medium">Atau Masuk Dengan:</span>
-        <div className="h-[1px] flex-1 bg-gray-200"></div>
-      </div>
-
-      {/* Social Logins */}
-      <div className="flex gap-4">
-        <button
-          type="button"
-          className="flex-1 flex items-center justify-center gap-3 h-[46px] rounded-xl border border-gray-300 bg-white hover:bg-gray-50 transition-all shadow-sm font-medium text-[14px] text-gray-700"
-        >
-          <img
-            src="https://www.svgrepo.com/show/475656/google-color.svg"
-            className="w-[18px] h-[18px]"
-            alt="Google"
-          />
-          Google
-        </button>
-        <button
-          type="button"
-          className="flex-1 flex items-center justify-center gap-3 h-[46px] rounded-xl border border-gray-300 bg-white hover:bg-gray-50 transition-all shadow-sm font-medium text-[14px] text-gray-700"
-        >
-          <img
-            src="https://www.svgrepo.com/show/475647/facebook-color.svg"
-            className="w-[18px] h-[18px]"
-            alt="Facebook"
-          />
-          Facebook
-        </button>
-      </div>
-
       <div className="mt-8 text-center font-medium text-[14px]">
         <span className="text-gray-500">Belum Punya Akun? </span>
         <button

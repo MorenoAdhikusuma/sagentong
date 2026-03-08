@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@sagentong/config": "workspace:*",
+    "@types/nodemailer": "^7.0.11",
     "typescript": "catalog:"
   }
 }

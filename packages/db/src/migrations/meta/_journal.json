@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1772509075098,
-      "tag": "0000_boring_terrax",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1772987278639,
-      "tag": "0001_bizarre_dracula",
+      "when": 1772988833351,
+      "tag": "0000_cheerful_makkari",
       "breakpoints": true
     }
   ]

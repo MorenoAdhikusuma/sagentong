@@ -10,6 +10,7 @@
   "dependencies": {
     "@base-ui/react": "^1.0.0",
     "@sagentong/auth": "workspace:*",
+    "@sagentong/db": "workspace:*",
     "@sagentong/env": "workspace:*",
     "@tanstack/react-form": "^1.28.0",
     "babel-plugin-react-compiler": "^1.0.0",
@@ -17,6 +18,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dotenv": "catalog:",
+    "drizzle-orm": "^0.45.1",
     "lucide-react": "^0.546.0",
     "next": "^16.1.1",
     "next-themes": "^0.4.6",
