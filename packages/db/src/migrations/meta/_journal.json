@@ -8,6 +8,13 @@
       "when": 1772509075098,
       "tag": "0000_boring_terrax",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1772987278639,
+      "tag": "0001_bizarre_dracula",
+      "breakpoints": true
     }
   ]
 }

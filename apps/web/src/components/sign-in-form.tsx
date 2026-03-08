@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import z from "zod";
-import { Mail, Lock, EyeOff, Eye, User, ChevronDown } from "lucide-react";
+import { Mail, Lock, EyeOff, Eye } from "lucide-react";
 
 import { authClient } from "@/lib/auth-client";
 
@@ -72,26 +72,6 @@ export default function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () 
         }}
         className="space-y-4"
       >
-        {/* Mock Role Select */}
-        <div className="space-y-1.5">
-          <Label className="text-[#0f374c] font-semibold text-[14px]">Masuk Sebagai</Label>
-          <div className="relative">
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
-              <User className="w-5 h-5" />
-            </div>
-            <select className="w-full bg-white border border-gray-200 rounded-xl py-3 pl-12 pr-10 text-[15px] text-gray-400 appearance-none focus:ring-2 focus:ring-[#2c869a] focus:border-transparent outline-none">
-              <option selected disabled value="pilih_role">
-                Pilih Role
-              </option>
-              <option value="perangkat_desa">Perangkat Desa</option>
-              <option value="relawan">Relawan</option>
-            </select>
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
-              <ChevronDown className="w-5 h-5" />
-            </div>
-          </div>
-        </div>
-
         {/* Email Field */}
         <div>
           <form.Field name="email">

@@ -35,12 +35,12 @@ export default function SignUpForm({ onSwitchToSignIn, role, onBack }: SignUpFor
       name: "",
     },
     onSubmit: async ({ value }) => {
-      // Typically you would pass 'role' as well if backend supports it
       await authClient.signUp.email(
         {
           email: value.email,
           password: value.password,
           name: value.name,
+          role: role ?? "relawan",
         },
         {
           onSuccess: () => {
