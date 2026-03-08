@@ -348,7 +348,7 @@ export default function LandingFigma() {
             </div>
           </div>
 
-          <div className="flex justify-center gap-8 mb-16 *:w-[42px] *:h-[42px] *:rounded-full *:bg-white/10 *:flex *:items-center *:justify-center hover:*:bg-white/20 transition-all *:cursor-pointer">
+          <div className="flex justify-center gap-8 mb-16 *:w-[42px] *:h-[42px] *:rounded-full *:bg-white/10 *:flex *:items-center *:justify-center *:hover:bg-white/20 transition-all *:cursor-pointer">
             <div>
               <Instagram className="w-5 h-5" />
             </div>
